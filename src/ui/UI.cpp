@@ -28,8 +28,9 @@ CUI::CUI(bool open) : m_openByDefault(open) {
                        ->rounding(m_backend->getPalette()->m_vars.bigRounding)
                        ->borderColor([this] { return m_backend->getPalette()->m_colors.accent.darken(0.2F); })
                        ->borderThickness(*PBORDERSIZE)
-                       ->size({Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, {1, 1}})
+                       ->size({Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, {(*PWINDOWSIZE).x, (*PWINDOWSIZE).y}})
                        ->commence();
+    m_background->setAbsolutePosition({1, 1});
 
     m_layout =
         Hyprtoolkit::CColumnLayoutBuilder::begin()->size({Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, {1, 1}})->gap(4)->commence();
@@ -70,7 +71,7 @@ CUI::CUI(bool open) : m_openByDefault(open) {
     m_window = Hyprtoolkit::CWindowBuilder::begin()
                    ->appClass("hyprlauncher")
                    ->type(Hyprtoolkit::HT_WINDOW_LAYER)
-                   ->preferredSize({(*PWINDOWSIZE).x, (*PWINDOWSIZE).y})
+                   ->preferredSize({(*PWINDOWSIZE).x + 2, (*PWINDOWSIZE).y + 2})
                    ->anchor(1 | 2 | 4 | 8)
                    ->exclusiveZone(-1)
                    ->layer(3)
