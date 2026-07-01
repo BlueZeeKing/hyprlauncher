@@ -20,6 +20,8 @@ CUI::CUI(bool open) : m_openByDefault(open) {
     static auto PGRABFOCUS  = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "general:grab_focus");
     static auto PWINDOWSIZE = Hyprlang::CSimpleConfigValue<Hyprlang::VEC2>(g_configManager->m_config.get(), "ui:window_size");
     static auto PBORDERSIZE = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "ui:border_size");
+    static auto PGAPSIZE = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "ui:gap_size");
+    static auto PMARGINSIZE = Hyprlang::CSimpleConfigValue<Hyprlang::FLOAT>(g_configManager->m_config.get(), "ui:margin_size");
 
     m_backend = Hyprtoolkit::IBackend::create();
 
@@ -33,8 +35,8 @@ CUI::CUI(bool open) : m_openByDefault(open) {
     m_background->setAbsolutePosition({1, 1});
 
     m_layout =
-        Hyprtoolkit::CColumnLayoutBuilder::begin()->size({Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, {1, 1}})->gap(4)->commence();
-    m_layout->setMargin(4);
+        Hyprtoolkit::CColumnLayoutBuilder::begin()->size({Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, {1, 1}})->gap(*PGAPSIZE)->commence();
+    m_layout->setMargin(*PMARGINSIZE);
 
     m_inputBox = Hyprtoolkit::CTextboxBuilder::begin()
                      ->placeholder(I18n::localize(I18n::TXT_KEY_SEARCH_SOMETHING, {}))
