@@ -31,6 +31,7 @@ CConfigManager::CConfigManager() : m_inotifyFd(inotify_init()) {
     m_config->addConfigValue("finders:desktop_icons", Hyprlang::INT{1});
 
     m_config->addConfigValue("ui:window_size", Hyprlang::VEC2{400, 260});
+    m_config->addConfigValue("ui:border_size", Hyprlang::INT{1});
 
     m_config->commence();
 

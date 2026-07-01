@@ -19,6 +19,7 @@ constexpr const size_t MAX_RESULTS_IN_LAUNCHER = 50;
 CUI::CUI(bool open) : m_openByDefault(open) {
     static auto PGRABFOCUS  = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "general:grab_focus");
     static auto PWINDOWSIZE = Hyprlang::CSimpleConfigValue<Hyprlang::VEC2>(g_configManager->m_config.get(), "ui:window_size");
+    static auto PBORDERSIZE = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "ui:border_size");
 
     m_backend = Hyprtoolkit::IBackend::create();
 
@@ -26,7 +27,7 @@ CUI::CUI(bool open) : m_openByDefault(open) {
                        ->color([this] { return m_backend->getPalette()->m_colors.background; })
                        ->rounding(m_backend->getPalette()->m_vars.bigRounding)
                        ->borderColor([this] { return m_backend->getPalette()->m_colors.accent.darken(0.2F); })
-                       ->borderThickness(1)
+                       ->borderThickness(*PBORDERSIZE)
                        ->size({Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, Hyprtoolkit::CDynamicSize::HT_SIZE_PERCENT, {1, 1}})
                        ->commence();
 
